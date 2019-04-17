@@ -211,6 +211,27 @@ router.post("/experience", passport.authenticate("jwt", {session: false}),
 
 
 
+//@route DELETE api/profile/experience/:exp_id
+//@desc DELETE experience to profile
+//@access PRIVATE
+router.delete("/experience/:exp_id", passport.authenticate("jwt", {session: false}),
+ (req,res) =>{
+
+    Profile.findOne({user: req.user.id})
+        .then(profile =>{
+
+             //Get remove index
+             const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
+
+             //Splice out of array
+            profile.experience.splice(removeIndex,1);
+
+            //Save
+            profile.save().then(profile => res.json(profile));
+        }).catch(err => res.status(404).json(err));
+})
+
+
 //@route POST api/profile/education
 //@desc Add education to profile
 //@access PRIVATE
@@ -242,6 +263,46 @@ router.post("/education", passport.authenticate("jwt", {session: false}),
         
             profile.save().then(profile => res.json(profile));
         })
+})
+
+
+//@route DELETE api/profile/education/:exp_id
+//@desc DELETE education to profile
+//@access PRIVATE
+router.delete("/education/:edu_id", passport.authenticate("jwt", {session: false}),
+ (req,res) =>{
+
+    Profile.findOne({user: req.user.id})
+        .then(profile =>{
+
+             //Get remove index
+             const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
+
+             //Splice out of array
+            profile.education.splice(removeIndex,1);
+
+            //Save
+            profile.save().then(profile => res.json(profile));
+        }).catch(err => res.status(404).json(err));
+})
+
+
+
+//@route DELETE api/profile
+//@desc DELETE user and profile
+//@access PRIVATE
+
+router.delete("/", passport.authenticate("jwt", {session: false}),
+ (req,res) =>{
+
+    Profile.findOneAndRemove({user: req.user.id})
+    .then( () =>{
+        User.findOneAndRemove({_id: req.user.id})
+        .then(() =>{
+            res.json({success : true})
+        });
+    });
+   
 })
 
 
