@@ -23,7 +23,6 @@ router.get("/test", (req,res) => res.json({msg: "Users Works"}));
 //@desc Register
 //@access PUBLIC
 router.post("/register", (req,res) =>{
-
     const {errors, isValid} = validateRegisterInput(req.body);
 
     //Check Validation
@@ -129,7 +128,7 @@ User.findOne({email: email}) .then(
 //@route GET api/users/current
 //@desc Return current User
 //@access PRIVATE
-router.get("/current", passport.authenticate("jwt", {session: false}), 
+router.get("/current", passport.authenticate("jwt", {session: false}),
 (req,res) =>{
     res.json({
         id: req.user.id,
