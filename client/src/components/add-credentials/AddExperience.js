@@ -51,7 +51,7 @@ class AddExperience extends Component {
         this.props.addExperience(expData, this.props.history);
     }
 
-    onChange(e) {
+	onChange(e) {
         this.setState({
             [e.target.name] : e.target.value
         })
@@ -108,7 +108,8 @@ class AddExperience extends Component {
 								<h6>From Date</h6>
 								<TextFieldGroup
 									placeholder="from"
-									name="date"
+									name="from"
+									type="date"
 									value={this.state.from}
 									onChange={this.onChange}
 									error={errors.from}
@@ -117,7 +118,8 @@ class AddExperience extends Component {
 								<h6>To Date</h6>
 								<TextFieldGroup
 									placeholder="to"
-									name="date"
+									name="to"
+									type="date"
 									value={this.state.to}
 									onChange={this.onChange}
 									error={errors.to}
