@@ -21,12 +21,14 @@ export const getCurrentProfile = () => dispatch => {
 //Get Profile By Handle
 export const getProfileByHandle = (handle) => dispatch => {
     dispatch(setProfileLoading());
-    axios.get(`/api/profile/${handle}`).then(res => {
+    axios.get(`/api/profile/handle/${handle}`).then(res => {
+        console.log("get Profile Handle res ---> ", res);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
         })
     }).catch(err => {
+        console.log("err in setProfileLoading.... ", err);
         dispatch({
             type: GET_PROFILE,
             payload: null

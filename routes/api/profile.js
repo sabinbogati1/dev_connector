@@ -66,17 +66,23 @@ router.get("/all", (req,res) =>{
 //@desc Get profile by handle
 //@access PUBLIC
 router.get("/handle/:handle", (req,res) =>{
+    console.log("profile Handle :: ", req);
+    console.log("profile Handle :: ", req.params);
     const errors = {};
     Profile.findOne({handle: req.params.handle})
             .populate("user", ["name", "avatar"])
             .then(profile =>{
+                console.log("######################## profile ##################3", profile);
                 if(!profile){
                     errors.noprofile = "There is no profile for this user";
                     res.status(404).json(errors);
                 }
                     res.json(profile);
             })
-            .catch(err => res.status(404).json(err));
+            .catch(err =>{
+                console.log("######################## err ##################3", err);
+                res.status(404).json(err)
+            } );
 
 })
 
