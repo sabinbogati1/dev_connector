@@ -9,6 +9,7 @@ class ProfileAbout extends Component {
     const { profile } = this.props;
 
     //Get first Name
+    console.log("Profile About ---> ", profile);
     const firstName = profile.user.name.trim().split(" ")[0];
 
     //Skills List 
@@ -42,6 +43,10 @@ class ProfileAbout extends Component {
           </div>
          );
     }
+}
+
+ProfileAbout.protoTypes = {
+  profile: PropTypes.object.isRequired
 }
  
 export default ProfileAbout;

@@ -14,11 +14,13 @@ class Profile extends Component {
 
   componentDidMount() {
     if (this.props.match.params.handle) {
-      console.log(
-        " this.props.match.params.handle :::  ",
-        this.props.match.params.handle
-      );
       this.props.getProfileByHandle(this.props.match.params.handle);
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.profile.profile === null && this.props.profile.loading){
+      this.props.history.push("/not-found");
     }
   }
 
@@ -26,8 +28,10 @@ class Profile extends Component {
     const { profile, loading } = this.props.profile;
     let profileContent;
 
+    console.log("profile --> ", profile );
+
     if (profile === null || loading) {
-      profileContent = <Spinner />;
+      profileContent = <Spinner />; 
     } else {
       profileContent = (
         <div>
@@ -42,7 +46,11 @@ class Profile extends Component {
           <ProfileHeader profile={profile} />
           <ProfileAbout  profile={profile} />
           <ProfileCreds education={profile.education} experience={profile.experience} />
-          <ProfileGithub />
+         
+         {
+           profile.githubusername ? (<ProfileGithub username={profile.githubusername} />) : null
+         }
+
         </div>
       );
     }
